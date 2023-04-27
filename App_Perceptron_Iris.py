@@ -1,12 +1,20 @@
-#import joblib
-#import os
+# import joblib
+# import os
 from sklearn.datasets import load_iris
 import numpy as np
 import pandas as pd
 import streamlit as st
 import pandas as pd
 import time
-from funciones import predict
+import joblib
+# from funciones import predicccion
+
+
+def prediccion(data, model_name):
+    model_perceptron = joblib.load('model_perceptron.sav')
+    tr_data = joblib.load('pipeline_perceptron.sav')
+    tr_pipeline = tr_data.transform(data)
+    return model_perceptron.prediccion(tr_pipeline)
 
 
 iris = load_iris(as_frame=True)
@@ -21,7 +29,8 @@ petal_width = st.sidebar.slider('Petal width (cm):', 0.0, 5.0, 0.4)
 
 
 st.header('Perceptron')
-model_option = st.header('Modelo a usar:', 'Perceptron')
+
+# st.header('Modelo a usar:', 'Perceptron')
 
 if st.button('Predecir'):
     data = {
@@ -31,11 +40,12 @@ if st.button('Predecir'):
         'petal width (cm)': petal_width
     }
     features = pd.DataFrame(data, index=[0])
-    pctn = predict(features,model_option)
-    #lr = predict(features, model_option)
-    #svc = predict(features, model_option)
-    #dt = predict(features, model_option)
-    #vc = predict(features, model_option)
+    pctn = prediccion(features, model_option)
+    iris_class = ['Iris-Setosa', 'Iris-Versicolour', 'Iris-Virginica']
+    # lr = predict(features, model_option)
+    # svc = predict(features, model_option)
+    # dt = predict(features, model_option)
+    # vc = predict(features, model_option)
 
     # Barra de progreso
     latest_iteration = st.empty()
@@ -45,6 +55,6 @@ if st.button('Predecir'):
             f'Calculando la clasificacion de flor Iris {i+1}%')
         bar.progress(i+1)
         time.sleep(0.01)
-    result = predict(features, model_option)
-    st.subheader(f'La clasificacion de la flor Iris es: {iris.target_names[pctn[0]]}')
-
+    result = prediccion(features, model_option)
+    st.subheader(
+        f'La clasificacion de la flor Iris es: {iris.target_names[pctn[0]]}')
