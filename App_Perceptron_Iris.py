@@ -40,7 +40,7 @@ if st.button('Predecir'):
         'petal width (cm)': petal_width
     }
     features = pd.DataFrame(data, index=[0])
-    pctn = prediccion(features, model_option)
+    # pctn = prediccion(features, model_option)
     iris_class = ['Iris-Setosa', 'Iris-Versicolour', 'Iris-Virginica']
     # lr = predict(features, model_option)
     # svc = predict(features, model_option)
