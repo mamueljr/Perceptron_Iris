@@ -24,7 +24,8 @@ ppn = Perceptron(max_iter=1000, eta0=0.0001, random_state=0, tol=0.001)
 ppn.fit(X_train_std, y_train)
 # Hacer la prediccion
 y_pred = ppn.predict(X_train_std)
-print('-----------')
+# print(y_pred)
+# print(y_test)
 print((y_test != y_pred).sum(), '/',
       ((y_test == y_pred).sum()+(y_test != y_pred).sum()))
-print('Accuracy: ', 100*accuracy_score(y_test, y_pred))
+# print('Accuracy: ', 100*accuracy_score(y_test, y_pred))
